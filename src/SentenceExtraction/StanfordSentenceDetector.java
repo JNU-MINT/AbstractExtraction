@@ -1,4 +1,4 @@
-package Extraction;
+package SentenceExtraction;
 
 import java.util.ArrayList;
 import java.util.List;

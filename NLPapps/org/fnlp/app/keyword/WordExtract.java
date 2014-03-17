@@ -19,6 +19,11 @@ import edu.fudan.nlp.corpus.StopWords;
  *
  */
 
+/**
+ * 注释添加
+ * @author qiusd
+ * 
+ */
 class WDataSet{
 	Graph textRankGraph = new Graph();
 	ArrayList<Double> weight = new ArrayList<Double>();
@@ -29,6 +34,7 @@ class WDataSet{
 	ArrayList<String> uniqueStrList = new ArrayList<String>();
 }
 
+//TODO:设置AbstractExtractor权重收敛的默认阈值
 public class WordExtract extends AbstractExtractor{
 	
 	public WordExtract(){
@@ -43,7 +49,7 @@ public class WordExtract extends AbstractExtractor{
 		this.cWSTagger = tag;
 		stopWords = new StopWords(dicPath);
 	}
-	//目前是这个
+	//目前所用的是这个
 	public WordExtract(CWSTagger tag, StopWords test){
 		this.cWSTagger = tag;
 		this.stopWords = test;

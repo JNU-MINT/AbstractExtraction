@@ -1,4 +1,4 @@
-package Extraction;
+package TestCode;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -7,12 +7,13 @@ import java.util.Iterator;
 import java.util.Map;
 
 import org.fnlp.app.keyword.AbstractExtractor;
-import org.fnlp.app.keyword.SentenceExtract;
+
+import SentenceExtraction.SentenceExtract;
 
 import edu.fudan.nlp.cn.tag.CWSTagger;
 import edu.fudan.nlp.corpus.StopWords;
 
-public class KeySentenceExtraction {
+public class SentenceExtractionTest {
 
 	public static void main(String[] args) throws Exception {
 		

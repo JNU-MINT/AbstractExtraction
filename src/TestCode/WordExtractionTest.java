@@ -1,4 +1,4 @@
-package Extraction;
+package TestCode;
 import org.fnlp.app.keyword.AbstractExtractor;
 import org.fnlp.app.keyword.WordExtract;
 
@@ -10,7 +10,7 @@ import edu.fudan.nlp.corpus.StopWords;
  * @author jyzhao,ltian
  *
  */
-public class KeyWordExtraction {
+public class WordExtractionTest {
 	
 	public static void main(String[] args) throws Exception {
 		

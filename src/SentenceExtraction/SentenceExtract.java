@@ -1,4 +1,4 @@
-package org.fnlp.app.keyword;
+package SentenceExtraction;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -10,9 +10,9 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
-import Extraction.StanfordSentenceDetector;
-
-
+import org.fnlp.app.keyword.AbstractExtractor;
+import org.fnlp.app.keyword.Graph;
+import org.fnlp.app.keyword.Vertex;
 
 import edu.fudan.nlp.cn.Sentenizer;
 import edu.fudan.nlp.cn.tag.CWSTagger;
@@ -28,6 +28,7 @@ class SDataSet{
 	ArrayList<String> uniqueStrList = new ArrayList<String>();
 }
 
+//TODO:设置AbstractExtractor权重收敛的默认阈值
 public class SentenceExtract extends AbstractExtractor{
 	
 	public SentenceExtract(){}

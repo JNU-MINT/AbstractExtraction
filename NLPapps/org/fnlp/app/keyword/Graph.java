@@ -3,10 +3,7 @@ package org.fnlp.app.keyword;
 import java.util.ArrayList;
 
 /**
- * @author qiusd
- *
- */
-/**
+ * 注释添加
  * @author qiusd
  *
  */

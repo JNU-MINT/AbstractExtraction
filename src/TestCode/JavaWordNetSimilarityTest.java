@@ -1,12 +1,12 @@
 //计算两个词的相似度
-package Extraction;
+package TestCode;
 import java.util.TreeMap;
 import java.text.*;
 import edu.sussex.nlp.jws.*;
 
 // 'TestExamples': how to use Java WordNet::Similarity
 // David Hope, 2008
-public class JWSTestExamples
+public class JavaWordNetSimilarityTest
 {
  	public static void main(String[] args)
 	{

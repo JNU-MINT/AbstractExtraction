@@ -1,4 +1,4 @@
-package org.fnlp.app.keyword;
+package SentenceExtraction;
 import java.util.List;
 import java.util.ArrayList;
 import java.lang.String;

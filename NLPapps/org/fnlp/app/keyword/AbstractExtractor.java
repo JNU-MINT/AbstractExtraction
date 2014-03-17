@@ -11,6 +11,7 @@ public abstract class AbstractExtractor {
 	protected StopWords stopWords;
 	/**
 	 * 权重收敛的默认阈值
+	 * 原程序为0.001
 	 */
 	protected double precision = 0.0001;//权重收敛的默认阈值
 	/**

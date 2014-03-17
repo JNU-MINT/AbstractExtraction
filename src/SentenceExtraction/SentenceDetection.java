@@ -1,4 +1,4 @@
-package DemoTest;
+package SentenceExtraction;
 
 import com.aliasi.sentences.MedlineSentenceModel;
 import com.aliasi.sentences.SentenceModel;
