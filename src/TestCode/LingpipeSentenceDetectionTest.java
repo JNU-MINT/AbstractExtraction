@@ -1,4 +1,4 @@
-package SentenceExtraction;
+package TestCode;
 
 import com.aliasi.sentences.MedlineSentenceModel;
 import com.aliasi.sentences.SentenceModel;
@@ -6,8 +6,6 @@ import com.aliasi.sentences.SentenceModel;
 import com.aliasi.tokenizer.IndoEuropeanTokenizerFactory;
 import com.aliasi.tokenizer.TokenizerFactory;
 import com.aliasi.tokenizer.Tokenizer;
-
-import com.aliasi.util.Files;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -22,7 +20,13 @@ import java.util.List;
 import java.util.Set;
 
 /** Use SentenceModel to find sentence boundaries in text */
-public class SentenceDetection {
+
+/**
+ * 使用Lingpipe进行断句
+ * @author qiusd
+ *
+ */
+public class LingpipeSentenceDetectionTest {
 
 	static final TokenizerFactory TOKENIZER_FACTORY = IndoEuropeanTokenizerFactory.INSTANCE;
 	static final SentenceModel SENTENCE_MODEL = new MedlineSentenceModel();
@@ -58,11 +62,9 @@ public class SentenceDetection {
 		String[] whites = new String[whiteList.size()];
 		tokenList.toArray(tokens);
 		whiteList.toArray(whites);
-		int[] sentenceBoundaries = SENTENCE_MODEL.boundaryIndices(tokens,
-				whites);
+		int[] sentenceBoundaries = SENTENCE_MODEL.boundaryIndices(tokens, whites);
 
-		System.out.println(sentenceBoundaries.length
-				+ " SENTENCE END TOKEN OFFSETS");
+		System.out.println(sentenceBoundaries.length + " SENTENCE END TOKEN OFFSETS");
 
 		if (sentenceBoundaries.length < 1) {
 			System.out.println("No sentence boundaries found.");
@@ -72,7 +74,7 @@ public class SentenceDetection {
 		int sentEndTok = 0;
 		for (int i = 0; i < sentenceBoundaries.length; ++i) {
 			sentEndTok = sentenceBoundaries[i];
-			System.out.println("SENTENCE " + (i + 1) + ": ");
+			System.out.println("Sentence " + (i + 1) + ": ");
 			for (int j = sentStartTok; j <= sentEndTok; j++) {
 				System.out.print(tokens[j] + whites[j + 1]);
 			}

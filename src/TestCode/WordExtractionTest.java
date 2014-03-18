@@ -10,6 +10,11 @@ import edu.fudan.nlp.corpus.StopWords;
  * @author jyzhao,ltian
  *
  */
+/**
+ * 修改自Fudannlp的示例代码
+ * @author qiusd
+ *
+ */
 public class WordExtractionTest {
 	
 	public static void main(String[] args) throws Exception {
@@ -38,11 +43,7 @@ public class WordExtractionTest {
 		System.out.println(key.extract("赵嘉亿 是 好人 还是 坏人", 10));
 		System.out.println(key.extract("word1 word2 word3 word4 word5", 10));
 		
-		
 		key = new WordExtract();
 		System.out.println(key.extract("", 5));
-		
-		
-		
 	}
 }

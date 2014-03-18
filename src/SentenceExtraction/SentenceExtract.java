@@ -18,6 +18,11 @@ import edu.fudan.nlp.cn.Sentenizer;
 import edu.fudan.nlp.cn.tag.CWSTagger;
 import edu.fudan.nlp.corpus.StopWords;
 
+/**
+ * 存放句子的类
+ * 与NLPapps/org/fnlp/app/keyword/WordExtract中的WDataSet类似
+ * @author qiusd
+ */
 class SDataSet{
 	Graph textRankGraph = new Graph();
 	ArrayList<Double> weight = new ArrayList<Double>();
@@ -28,7 +33,12 @@ class SDataSet{
 	ArrayList<String> uniqueStrList = new ArrayList<String>();
 }
 
-//TODO:设置AbstractExtractor权重收敛的默认阈值
+
+//TODO 设置AbstractExtractor权重收敛的默认阈值
+/**
+ * @author qiusd
+ * 重要句子提取类
+ */
 public class SentenceExtract extends AbstractExtractor{
 	
 	public SentenceExtract(){}
@@ -99,7 +109,7 @@ public class SentenceExtract extends AbstractExtractor{
 		//加边
 		String sentence1,sentence2;
 		int index1,index2;
-		Similar simalar = new Similar(cWSTagger, stopWords);
+		JWSSimilar simalar = new JWSSimilar(cWSTagger, stopWords);
 		//OUTPUT
 		System.out.println("Similirity of sentences:");
 		for(int i = 0; i < sDataSet.strList.size() - 1; i++){
@@ -148,6 +158,9 @@ public class SentenceExtract extends AbstractExtractor{
 		}
 	}
 	
+	/**
+	 * 进行迭代计算
+	 */
 	public SDataSet cal(SDataSet sds){
 		int i, j, forwardCount, times = 0;
 		double sumWBackLink, newW;
@@ -218,17 +231,13 @@ public class SentenceExtract extends AbstractExtractor{
 		int i, j, index;
 		double max;
 		LinkedHashMap<String,Integer> mapList = new LinkedHashMap<String,Integer>();
-		
 		if(sds.textRankGraph.getNVerts() == 0)
 			return mapList;
-		
 		ArrayList<Integer> wNormalized = normalized(sds);
 		toBackW(sds);
-		
 		int temp = sds.uniqueStrList.size();
 		if(selectCount > temp)
 			selectCount = temp;
-		
 		for(j = 0; j < selectCount; j++){
 			max = -1.0;
 			index = -1;

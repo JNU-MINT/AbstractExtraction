@@ -9,15 +9,25 @@ import edu.sussex.nlp.jws.JWS;
 import edu.sussex.nlp.jws.Lin;
 
 
-public class Similar {
+/**
+ * 利用Java WordNet计算 
+ * @author qiusd
+ *
+ */
+public class JWSSimilar {
 
+    /**
+     * 此处为配置的路径
+     * 需要先在计算机中安装WordNet
+     */
     private String dir = "E:\\Program Files (x86)\\WordNet";
+    
     private JWS jws = new JWS(dir, "2.1");
     
     private CWSTagger cWSTagger;
     private StopWords stopWords;
     
-    public Similar(CWSTagger tag, StopWords test){
+    public JWSSimilar(CWSTagger tag, StopWords test){
 		this.cWSTagger = tag;
 		this.stopWords = test;
 	}
@@ -103,16 +113,5 @@ public class Similar {
         return maxScore;
     }
     
-    public static void main(String args[]) throws Exception{
-        String sentence1="I will go to the mall and take goods back";
-        String sentence2="I am going to shopping center to buy some things ";
-        
-        StopWords sw= new StopWords("models/stopwords");
-		CWSTagger seg = new CWSTagger("models/seg.m");
-		
-        Similar sm= new Similar(seg, sw);
-        System.out.println(sm.getSentenceSimilirity(sentence1, sentence2));
-        
-        System.out.println(sm.getMaxScoreOfLin("good", "nice"));
-    }
+
 }

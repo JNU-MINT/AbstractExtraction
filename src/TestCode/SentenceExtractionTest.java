@@ -13,11 +13,13 @@ import SentenceExtraction.SentenceExtract;
 import edu.fudan.nlp.cn.tag.CWSTagger;
 import edu.fudan.nlp.corpus.StopWords;
 
+/**
+ * 测试重要句子的抽取
+ * @author qiusd
+ *
+ */
 public class SentenceExtractionTest {
-
 	public static void main(String[] args) throws Exception {
-		
-		
 		StopWords sw= new StopWords("models/stopwords");
 		CWSTagger seg = new CWSTagger("models/seg.m");
 		
