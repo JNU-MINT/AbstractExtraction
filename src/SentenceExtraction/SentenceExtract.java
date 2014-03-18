@@ -41,6 +41,14 @@ class SDataSet{
  */
 public class SentenceExtract extends AbstractExtractor{
 	
+	//TODO: 把这两个值需要设置为能够改动的模式
+	private double sT = 1/4.0;
+	private double sR = 1/3.0;
+	
+	private double sTValue;
+	private double sRValue;
+	
+	
 	public SentenceExtract(){}
 	
 	public SentenceExtract(String segPath, String dicPath) throws Exception{
@@ -81,6 +89,12 @@ public class SentenceExtract extends AbstractExtractor{
 		return sds;
 	}
 	
+	/**
+	 * 完成图的构建
+	 * @param window
+	 * @param sDataSet
+	 * @return sDataSet
+	 */
 	private SDataSet mapInit(int window, SDataSet sDataSet){
 		
 		TreeMap<String,Integer> treeMap = new TreeMap<String,Integer>();
@@ -105,11 +119,33 @@ public class SentenceExtract extends AbstractExtractor{
 			else if(window <= length || window <= 3)
 				break;
 		}
-
+		
+		JWSSimilar simalar = new JWSSimilar(cWSTagger, stopWords);
+		//计算所有边的权重
+		double weightThreshold;
+		ArrayList<Double> weightList = new ArrayList<>();
+		for(int i = 0; i < sDataSet.strList.size() - 1; i++)
+		{
+			for(int j = i + 1; j <  sDataSet.strList.size(); j++)
+			{
+				String sentence1 = sDataSet.strList.get(i);
+				String sentence2 = sDataSet.strList.get(j);
+				double similarScore = simalar.getSentenceSimilirity(sentence1, sentence2);
+				weightList.add(similarScore);
+			}
+		}
+		Collections.sort(weightList);
+		if(weightList.size() * sT <= 1.0) {
+			sTValue = 0 ;
+		}
+		else {
+			sTValue = weightList.get((int)(weightList.size() * sT) - 1);
+		}
+		
+		
 		//加边
 		String sentence1,sentence2;
 		int index1,index2;
-		JWSSimilar simalar = new JWSSimilar(cWSTagger, stopWords);
 		//OUTPUT
 		System.out.println("Similirity of sentences:");
 		for(int i = 0; i < sDataSet.strList.size() - 1; i++){
@@ -122,7 +158,7 @@ public class SentenceExtract extends AbstractExtractor{
 				//OUTPUT
 				System.out.println(sentence1 + "--->" + sentence2 + ":" + similarScore);
 				//WHY:原来加的是单向边？
-				if(similarScore > 0.05) {
+				if(similarScore > sTValue) {
 					sDataSet.textRankGraph.addEdge(index2, index1, similarScore);
 					sDataSet.textRankGraph.addEdge(index1, index2, similarScore);
 				}
