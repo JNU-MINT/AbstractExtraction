@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="src" path="NLPsrc"/>
 	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="NLPapps"/>
+	<classpathentry kind="src" path="NLPsrc"/>
 	<classpathentry kind="lib" path="F:/Eclipse_workspace/AbstractExtraction/lib/commons-cli-1.2.jar"/>
 	<classpathentry kind="lib" path="F:/Eclipse_workspace/AbstractExtraction/lib/lingpipe-4.1.0.jar"/>
 	<classpathentry kind="lib" path="F:/Eclipse_workspace/AbstractExtraction/lib/lucene-core-4.0.0.jar"/>
 	<classpathentry kind="lib" path="F:/Eclipse_workspace/AbstractExtraction/lib/lucene-queryparser-4.0.0.jar"/>
 	<classpathentry kind="lib" path="F:/Eclipse_workspace/AbstractExtraction/lib/stanford-postagger.jar"/>
 	<classpathentry kind="lib" path="F:/Eclipse_workspace/AbstractExtraction/lib/trove.jar"/>
-	<classpathentry kind="src" path="NLPapps"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jdk1.7.0_09"/>
 	<classpathentry kind="lib" path="F:/Eclipse_workspace/AbstractExtraction/lib/edu.mit.jwi_2.1.4.jar"/>
 	<classpathentry kind="lib" path="F:/Eclipse_workspace/AbstractExtraction/lib/edu.sussex.nlp.jws.beta.11.jar"/>
