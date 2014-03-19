@@ -10,6 +10,7 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
+import org.apache.lucene.search.similarities.Similarity;
 import org.fnlp.app.keyword.AbstractExtractor;
 import org.fnlp.app.keyword.Graph;
 import org.fnlp.app.keyword.Vertex;
@@ -28,9 +29,9 @@ class SDataSet{
 	ArrayList<Double> weight = new ArrayList<Double>();
 	ArrayList<Double> lastWeight = new ArrayList<Double>();
 	//词的列表
-	List<String> strList = new ArrayList<String>();
+	ArrayList<String> sentenceList = new ArrayList<String>();
 	//排除重复词后的列表
-	ArrayList<String> uniqueStrList = new ArrayList<String>();
+	ArrayList<String> uniqueSentenceList = new ArrayList<String>();
 }
 
 
@@ -70,67 +71,43 @@ public class SentenceExtract extends AbstractExtractor{
 		Set<String> set = new TreeSet<String>();
 		SDataSet sds = new SDataSet();
 		
-		sds.strList = new ArrayList<String>(); 
+		sds.sentenceList = new ArrayList<String>(); 
 		for(int i=0;i<sentences.length;i++){
 			if(sentences[i].length()>0)
-			sds.strList.add(sentences[i]);
+			sds.sentenceList.add(sentences[i]);
 		}
 		
 		//重复的句子只取一个
-		for(int i = 0; i < sds.strList.size(); i++){
-			String temp = sds.strList.get(i);
+		for(int i = 0; i < sds.sentenceList.size(); i++){
+			String temp = sds.sentenceList.get(i);
 			set.add(temp);
 		}
 		Iterator<String> ii = set.iterator();
 		while(ii.hasNext()){
 			String str = ii.next();
-			sds.uniqueStrList.add(str);
+			sds.uniqueSentenceList.add(str);
 		}
 		return sds;
 	}
 	
 	/**
 	 * 完成图的构建
-	 * @param window
 	 * @param sDataSet
 	 * @return sDataSet
 	 */
-	private SDataSet mapInit(int window, SDataSet sDataSet){
+	private SDataSet mapInit(SDataSet sDataSet){
 		
-		TreeMap<String,Integer> treeMap = new TreeMap<String,Integer>();
-		Iterator<String> ii = sDataSet.uniqueStrList.iterator();
-		int vertexIndex = 0;
+		JWSSimilar similar = new JWSSimilar(cWSTagger, stopWords);
 		
-		//加顶点
-		while(ii.hasNext()){	
-			String s = ii.next();
-			Vertex vertex = new Vertex(s);
-			sDataSet.textRankGraph.addVertex(vertex);
-			sDataSet.weight.add(1.0);
-			sDataSet.lastWeight.add(1.0);
-			treeMap.put(s, vertexIndex);
-			vertexIndex++;
-		}
-		
-		int length = sDataSet.strList.size();
-		while(true){
-			if(window > length)
-				window /= 2;
-			else if(window <= length || window <= 3)
-				break;
-		}
-		
-		JWSSimilar simalar = new JWSSimilar(cWSTagger, stopWords);
-		//计算所有边的权重
-		double weightThreshold;
+		//计算sT的阈值
 		ArrayList<Double> weightList = new ArrayList<>();
-		for(int i = 0; i < sDataSet.strList.size() - 1; i++)
+		for(int i = 0; i < sDataSet.uniqueSentenceList.size() - 1; i++)
 		{
-			for(int j = i + 1; j <  sDataSet.strList.size(); j++)
+			for(int j = i + 1; j <  sDataSet.uniqueSentenceList.size(); j++)
 			{
-				String sentence1 = sDataSet.strList.get(i);
-				String sentence2 = sDataSet.strList.get(j);
-				double similarScore = simalar.getSentenceSimilirity(sentence1, sentence2);
+				String sentence1 = sDataSet.uniqueSentenceList.get(i);
+				String sentence2 = sDataSet.uniqueSentenceList.get(j);
+				double similarScore = similar.getSentenceSimilirity(sentence1, sentence2);
 				weightList.add(similarScore);
 			}
 		}
@@ -142,23 +119,51 @@ public class SentenceExtract extends AbstractExtractor{
 			sTValue = weightList.get((int)(weightList.size() * sT) - 1);
 		}
 		
+		//删除与其他句子不够相似的句子
+		for(int i = sDataSet.uniqueSentenceList.size()-1; i >= 0; i--) {
+			double similiritySum = 0.0;
+			for (int j = 0; j < sDataSet.uniqueSentenceList.size(); j++) {
+				String sentence1 = sDataSet.uniqueSentenceList.get(i);
+				String sentence2 = sDataSet.uniqueSentenceList.get(j);
+				double similarity = similar.getSentenceSimilirity(sentence1, sentence2);
+				if(i != j &&  similarity > sTValue) {
+					similiritySum += similarity;
+				}
+			}
+			if(similiritySum == 0.0) {
+				sDataSet.uniqueSentenceList.remove(i);
+			}
+		}
+		
+		//加顶点
+		TreeMap<String,Integer> treeMap = new TreeMap<String,Integer>();
+		Iterator<String> ii = sDataSet.uniqueSentenceList.iterator();
+		int vertexIndex = 0;
+		while(ii.hasNext()){
+			String s = ii.next();
+			Vertex vertex = new Vertex(s);
+			sDataSet.textRankGraph.addVertex(vertex);
+			sDataSet.weight.add(1.0);
+			sDataSet.lastWeight.add(1.0);
+			treeMap.put(s, vertexIndex);
+			vertexIndex++;
+		}
 		
 		//加边
 		String sentence1,sentence2;
 		int index1,index2;
-		//OUTPUT
 		System.out.println("Similirity of sentences:");
-		for(int i = 0; i < sDataSet.strList.size() - 1; i++){
-			sentence1 = sDataSet.strList.get(i);
+		for(int i = 0; i < sDataSet.uniqueSentenceList.size() - 1; i++){
+			sentence1 = sDataSet.uniqueSentenceList.get(i);
 			index1 = treeMap.get(sentence1);
-			for(int j = i + 1; j <  sDataSet.strList.size(); j++){
-				sentence2 = sDataSet.strList.get(j);
+			for(int j = i + 1; j <  sDataSet.uniqueSentenceList.size(); j++){
+				sentence2 = sDataSet.uniqueSentenceList.get(j);
 				index2 = treeMap.get(sentence2);
-				double similarScore = simalar.getSentenceSimilirity(sentence1, sentence2);
+				double similarScore = similar.getSentenceSimilirity(sentence1, sentence2);
 				//OUTPUT
 				System.out.println(sentence1 + "--->" + sentence2 + ":" + similarScore);
 				//WHY:原来加的是单向边？
-				if(similarScore > sTValue) {
+				if(similarScore >= sTValue) {
 					sDataSet.textRankGraph.addEdge(index2, index1, similarScore);
 					sDataSet.textRankGraph.addEdge(index1, index2, similarScore);
 				}
@@ -177,7 +182,6 @@ public class SentenceExtract extends AbstractExtractor{
 		for(i = 0; i < sds.textRankGraph.getNVerts(); i++){
 			result += Math.abs(sds.weight.get(i) - sds.lastWeight.get(i));
 		}
-
 		if(result < precision)
 			return true;
 		else
@@ -271,7 +275,7 @@ public class SentenceExtract extends AbstractExtractor{
 			return mapList;
 		ArrayList<Integer> wNormalized = normalized(sds);
 		toBackW(sds);
-		int temp = sds.uniqueStrList.size();
+		int temp = sds.uniqueSentenceList.size();
 		if(selectCount > temp)
 			selectCount = temp;
 		for(j = 0; j < selectCount; j++){
@@ -292,19 +296,19 @@ public class SentenceExtract extends AbstractExtractor{
 	}
 	
 	public SDataSet proceed(String[] words){
-		SDataSet sds1, sds2;
+		SDataSet sds;
 		//WHY
-		sds1 = getSentence(words);
+		sds = getSentence(words);
 //		long time1 = System.currentTimeMillis();
 //		System.out.println("InitGraph...");
-		sds2 = mapInit(windowN, sds1);
+		sds = mapInit(sds);
 //		System.out.println("Succeed In InitGraph!");
 //		System.out.println("Now Calculate the PageRank Value...");
-		sds1 = cal(sds2);
+		sds = cal(sds);
 //		double time = (System.currentTimeMillis() - time1) / 1000.0;
 //		System.out.println("Time using: " + time + "s");
 //		System.out.println("PageRank Value Has Been Calculated!");
-		return sds1;
+		return sds;
 	}
 	
 	
