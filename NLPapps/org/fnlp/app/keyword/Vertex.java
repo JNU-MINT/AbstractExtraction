@@ -2,6 +2,9 @@ package org.fnlp.app.keyword;
 
 import java.util.ArrayList;
 
+/**
+ * NOTE: index和id是不同的两个概念
+ */
 public class Vertex {
 	public String id;
 	public int index;

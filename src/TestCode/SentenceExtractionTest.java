@@ -1,8 +1,5 @@
 package TestCode;
 
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.InputStreamReader;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -16,7 +13,6 @@ import edu.fudan.nlp.corpus.StopWords;
 /**
  * 测试重要句子的抽取
  * @author qiusd
- *
  */
 public class SentenceExtractionTest {
 	public static void main(String[] args) throws Exception {
@@ -43,11 +39,12 @@ public class SentenceExtractionTest {
 		Map<String, Integer> map = extractor.extract("TestData/SentenceDetectionTest4", 100);
 		Iterator iter = map.entrySet().iterator(); 
 		System.out.println("Result:");
+		int i = 0;
 		while (iter.hasNext()) { 
 		    Map.Entry entry = (Map.Entry) iter.next(); 
 		    Object key = entry.getKey(); 
 		    Object val = entry.getValue(); 
-		    System.out.println(key);
+		    System.out.println(i++ + ":" + key.toString());
 		    System.out.println("value = " + val);
 		}
 	}

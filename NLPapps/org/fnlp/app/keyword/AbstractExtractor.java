@@ -20,6 +20,8 @@ public abstract class AbstractExtractor {
 	protected double dN = 0.85;  //阻尼参数
 	/**
 	 * 窗体大小
+	 * 只对于原代码中的WordExtract
+	 * 对后来写的SentenceExtract无用
 	 */
 	protected int windowN = 10; //窗体大小
 	
