@@ -43,12 +43,11 @@ class SDataSet{
 public class SentenceExtract extends AbstractExtractor{
 	
 	//TODO: 把这两个值需要设置为能够改动的模式
-	private double sT = 1/4.0;
-	private double sR = 1/3.0;
+	private double sR = 1/4.0;
+	private double sT = 1/3.0;
 	
-	private double sTValue;
 	private double sRValue;
-	
+	private double sTValue;
 	
 	public SentenceExtract(){}
 	
@@ -112,11 +111,11 @@ public class SentenceExtract extends AbstractExtractor{
 			}
 		}
 		Collections.sort(weightList);
-		if(weightList.size() * sT <= 1.0) {
-			sTValue = 0 ;
+		if(weightList.size() * sR <= 1.0) {
+			sRValue = 0 ;
 		}
 		else {
-			sTValue = weightList.get((int)(weightList.size() * sT) - 1);
+			sRValue = weightList.get((int)(weightList.size() * sR) - 1);
 		}
 		
 		//删除与其他句子不够相似的句子
@@ -126,7 +125,7 @@ public class SentenceExtract extends AbstractExtractor{
 				String sentence1 = sDataSet.uniqueSentenceList.get(i);
 				String sentence2 = sDataSet.uniqueSentenceList.get(j);
 				double similarity = similar.getSentenceSimilirity(sentence1, sentence2);
-				if(i != j &&  similarity > sTValue) {
+				if(i != j &&  similarity > sRValue) {
 					similiritySum += similarity;
 				}
 			}
@@ -163,7 +162,7 @@ public class SentenceExtract extends AbstractExtractor{
 				//OUTPUT
 				System.out.println(sentence1 + "--->" + sentence2 + ":" + similarScore);
 				//WHY:原来加的是单向边？
-				if(similarScore >= sTValue) {
+				if(similarScore >= sRValue) {
 					sDataSet.textRankGraph.addEdge(index2, index1, similarScore);
 					sDataSet.textRankGraph.addEdge(index1, index2, similarScore);
 				}
