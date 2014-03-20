@@ -20,7 +20,7 @@ import edu.fudan.nlp.cn.tag.CWSTagger;
 import edu.fudan.nlp.corpus.StopWords;
 
 /**
- * 存放句子的类
+ * 句子类
  * 与NLPapps/org/fnlp/app/keyword/WordExtract中的WDataSet类似
  * @author qiusd
  */
@@ -28,9 +28,9 @@ class SDataSet{
 	Graph textRankGraph = new Graph();
 	ArrayList<Double> weight = new ArrayList<Double>();
 	ArrayList<Double> lastWeight = new ArrayList<Double>();
-	//词的列表
+	//句子列表
 	ArrayList<String> sentenceList = new ArrayList<String>();
-	//排除重复词后的列表
+	//不重复句子列表
 	ArrayList<String> uniqueSentenceList = new ArrayList<String>();
 }
 
@@ -42,12 +42,17 @@ class SDataSet{
  */
 public class SentenceExtract extends AbstractExtractor{
 	
-	//TODO: 把这两个值需要设置为能够改动的模式
-	private double sR = 1/4.0;
-	private double sT = 1/3.0;
 	
+	/**
+	 * sR：定义句子的相似值比例
+	 * sRValue:：相似度比例达到sR的实际阈值
+	 * sT：选取的句子数与句子总数的比值
+	 */
+	private double sR;
 	private double sRValue;
-	private double sTValue;
+	private double sT;
+	
+	private int sentenceNum;
 	
 	public SentenceExtract(){}
 	
@@ -59,16 +64,19 @@ public class SentenceExtract extends AbstractExtractor{
 		this.cWSTagger = tag;
 		stopWords = new StopWords(dicPath);
 	}
-	//now
+	/**
+	 * 目前所用的构造函数
+	 */
 	public SentenceExtract(CWSTagger tag, StopWords test){
 		this.cWSTagger = tag;
 		this.stopWords = test;
 	}
 	
-	
 	private SDataSet getSentence(String[] sentences){
 		Set<String> set = new TreeSet<String>();
 		SDataSet sds = new SDataSet();
+		
+		sentenceNum = sentences.length;
 		
 		sds.sentenceList = new ArrayList<String>(); 
 		for(int i=0;i<sentences.length;i++){
@@ -86,13 +94,13 @@ public class SentenceExtract extends AbstractExtractor{
 			String str = ii.next();
 			sds.uniqueSentenceList.add(str);
 		}
+		
 		return sds;
 	}
 	
+	
 	/**
-	 * 完成图的构建
-	 * @param sDataSet
-	 * @return sDataSet
+	 * 构建TextRank图
 	 */
 	private SDataSet mapInit(SDataSet sDataSet){
 		
@@ -172,7 +180,7 @@ public class SentenceExtract extends AbstractExtractor{
 	}
 	
 	/**
-	 * 计算是否已经迭代到收敛条件
+	 * 判断收敛
 	 */
 	boolean isCover(SDataSet sds){
 		int i;
@@ -188,7 +196,7 @@ public class SentenceExtract extends AbstractExtractor{
 	}
 	
 	/**
-	 * 把迭代结果保存起来，供下次迭代使用
+	 * 保存迭代结果，供下次迭代使用
 	 */
 	public void toBackW(SDataSet sds){
 		int i;
@@ -311,10 +319,12 @@ public class SentenceExtract extends AbstractExtractor{
 	}
 	
 	
-	
+	/**
+	 * 按句子数抽取
+	 */
 	public Map<String,Integer> extract(String docPath, int num){
 		String[] sentences;
-		//OLD
+//		这是Fudannlp中的断句函数，太naive
 //		sentences = Sentenizer.split(str);
 		sentences = StanfordSentenceDetector.split(docPath);
 		SDataSet sds = proceed(sentences);
@@ -322,10 +332,27 @@ public class SentenceExtract extends AbstractExtractor{
 		return mapList;
 	}
 	
+	/**
+	 * 按比例抽取
+	 */
+	public Map<String,Integer> extract(String docPath, double sR, double sT){
+		this.sR = sR;
+		this.sT = sT;
+		String[] sentences;
+		sentences = StanfordSentenceDetector.split(docPath);
+		SDataSet sds = proceed(sentences);
+		LinkedHashMap<String,Integer> mapList = selectTop((int)(this.sT * sentenceNum), sds);
+		return mapList;
+	}
+	
+	/**
+	 * 没用到
+	 */
 	@Override
 	public String extract(String str, int num, boolean isWeighted) {
 		return extract(str,num).toString();
 	}
+	
 }
 
 
