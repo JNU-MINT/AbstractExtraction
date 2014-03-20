@@ -65,6 +65,13 @@ public abstract class AbstractExtractor {
 		this.precision = precision;
 	}
 
+	/**
+	 * 这个目前没用到
+	 */
 	abstract public String extract(String str, int num, boolean isWeighted);
-	abstract  public Map<String,Integer> extract(String readFile, int i);
+	/**
+	 * 按数量选取
+	 */
+	abstract public Map<String,Integer> extract(String readFile, int i);
+	
 }

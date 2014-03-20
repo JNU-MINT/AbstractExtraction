@@ -33,7 +33,7 @@ public class LingpipeSentenceDetectionTest {
 
 	public static void main(String[] args) throws IOException {
 		
-		FileInputStream fi=new FileInputStream("TestData/SentenceDetectionTest");
+		FileInputStream fi=new FileInputStream("TestData/TestData1");
 		InputStreamReader ir = new InputStreamReader(fi,"GBK");
 		BufferedReader br = new BufferedReader(ir);
 		StringBuffer sb = new StringBuffer("");
