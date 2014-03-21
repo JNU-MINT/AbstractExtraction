@@ -10,6 +10,7 @@ import edu.sussex.nlp.jws.*;
  * 修改自JWS源代码中的测试代码
  * @author qiusd
  */
+
 public class JWSWordTest
 {
  	public static void main(String[] args)
