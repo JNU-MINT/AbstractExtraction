@@ -8,7 +8,6 @@ import edu.fudan.nlp.corpus.StopWords;
 import edu.sussex.nlp.jws.JWS;
 import edu.sussex.nlp.jws.Lin;
 
-
 /**
  * 利用Java WordNet计算 
  * @author qiusd
