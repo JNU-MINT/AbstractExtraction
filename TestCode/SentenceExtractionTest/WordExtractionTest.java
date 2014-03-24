@@ -1,4 +1,4 @@
-package TestCode;
+package SentenceExtractionTest;
 import org.fnlp.app.keyword.AbstractExtractor;
 import org.fnlp.app.keyword.WordExtract;
 

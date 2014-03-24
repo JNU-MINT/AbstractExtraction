@@ -1,4 +1,4 @@
-package TestCode;
+package SentenceExtractionTest;
 import java.util.TreeMap;
 import java.text.*;
 import edu.sussex.nlp.jws.*;

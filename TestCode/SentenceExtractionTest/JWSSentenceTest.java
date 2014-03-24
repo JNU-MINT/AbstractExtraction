@@ -1,4 +1,4 @@
-package TestCode;
+package SentenceExtractionTest;
 
 import SentenceExtraction.JWSSimilar;
 import edu.fudan.nlp.cn.tag.CWSTagger;

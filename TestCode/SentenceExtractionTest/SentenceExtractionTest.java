@@ -1,4 +1,4 @@
-package TestCode;
+package SentenceExtractionTest;
 
 import java.util.Iterator;
 import java.util.Map;
@@ -21,7 +21,8 @@ public class SentenceExtractionTest {
 		StopWords sw= new StopWords("models/stopwords");
 		SentenceExtract extractor = new SentenceExtract(seg,sw);
 		
-		Map<String, Integer> map = extractor.extract("TestData/TestData3", 1.0/4.0, 1.0/3.0);
+		Map<String, Integer> map = extractor.extract("TestData/TestData4", 1.0/4.0, 1.0/3.0);
+		
 		
 		Iterator iter = map.entrySet().iterator(); 
 		System.out.println("Result:");
