@@ -333,7 +333,11 @@ public class SentenceExtract extends AbstractExtractor{
 	}
 	
 	/**
-	 * 按比例抽取
+	 * 按比例抽取关键句子
+	 * @param docPath 文本路径
+	 * @param sR 比例(0-1)，超过此比例的权重才回建边
+	 * @param sT 比例(0-1)，只选取超过此比例的句子作为最终结果
+	 * @return
 	 */
 	public Map<String,Integer> extract(String docPath, double sR, double sT){
 		this.sR = sR;
