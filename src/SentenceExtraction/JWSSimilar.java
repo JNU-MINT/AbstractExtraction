@@ -18,10 +18,9 @@ public class JWSSimilar {
     /**
      * 此处为配置的路径
      * 需要先在计算机中安装WordNet
+     * 再在环境变量中设置“WNHOME”为WordNet安装路径
      */
-    private String dir = "E:\\Program Files (x86)\\WordNet";
-    
-    private JWS jws = new JWS(dir, "2.1");
+    private JWS jws = new JWS(System.getenv("WNHOME"), "2.1");
     
     private CWSTagger cWSTagger;
     private StopWords stopWords;
