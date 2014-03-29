@@ -15,11 +15,8 @@ public class JWSSentenceTest {
         String sentence1="I will go to the mall and take goods back";
         String sentence2="I am going to shopping center to buy some things ";
         
-        StopWords sw= new StopWords("models/stopwords");
-		CWSTagger seg = new CWSTagger("models/seg.m");
-		
-        JWSSimilar sm= new JWSSimilar(seg, sw);
+        JWSSimilar sm= new JWSSimilar();
         System.out.println("The similar of 2 sentences is");
-        System.out.println(sm.getSentenceSimilirity(sentence1, sentence2));
+        System.out.println(sm.getSentenceSimilarity(sentence1, sentence2));
     }
 }
