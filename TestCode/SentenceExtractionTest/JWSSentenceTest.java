@@ -16,7 +16,7 @@ public class JWSSentenceTest {
         String sentence2="I am going to shopping center to buy some things ";
         
         JWSSimilar sm= new JWSSimilar();
-        System.out.println("The similar of 2 sentences is");
+        System.out.println("The similarity of 2 sentences is");
         System.out.println(sm.getSentenceSimilarity(sentence1, sentence2));
     }
 }

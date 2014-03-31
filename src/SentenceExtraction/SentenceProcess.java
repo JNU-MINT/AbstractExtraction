@@ -28,7 +28,4 @@ public class SentenceProcess {
 		String[] wordArray = meaningfulWords.toArray(new String[length]);
     	return wordArray;
 	}
-	
-	
-
 }

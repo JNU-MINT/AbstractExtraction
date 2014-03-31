@@ -17,12 +17,9 @@ import edu.fudan.nlp.corpus.StopWords;
 public class SentenceExtractionTest {
 	public static void main(String[] args) throws Exception {
 		
-		CWSTagger seg = new CWSTagger("models/seg.m");
-		StopWords sw= new StopWords("models/stopwords");
-		SentenceExtract extractor = new SentenceExtract(seg,sw);
+		SentenceExtract extractor = new SentenceExtract();
 		
 		Map<String, Integer> map = extractor.extract("TestData/TestData4", 1.0/4.0, 1.0/3.0);
-		
 		
 		Iterator iter = map.entrySet().iterator(); 
 		System.out.println("Result:");
