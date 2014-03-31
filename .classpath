@@ -2,8 +2,7 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="TestCode"/>
-	<classpathentry kind="src" path="NLPapps"/>
-	<classpathentry kind="src" path="NLPsrc"/>
+	<classpathentry kind="src" path="FDNLP"/>
 	<classpathentry kind="lib" path="F:/Eclipse_workspace/AbstractExtraction/lib/commons-cli-1.2.jar"/>
 	<classpathentry kind="lib" path="F:/Eclipse_workspace/AbstractExtraction/lib/lingpipe-4.1.0.jar"/>
 	<classpathentry kind="lib" path="F:/Eclipse_workspace/AbstractExtraction/lib/lucene-queryparser-4.0.0.jar"/>
