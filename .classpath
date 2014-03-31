@@ -6,7 +6,6 @@
 	<classpathentry kind="src" path="NLPsrc"/>
 	<classpathentry kind="lib" path="F:/Eclipse_workspace/AbstractExtraction/lib/commons-cli-1.2.jar"/>
 	<classpathentry kind="lib" path="F:/Eclipse_workspace/AbstractExtraction/lib/lingpipe-4.1.0.jar"/>
-	<classpathentry kind="lib" path="F:/Eclipse_workspace/AbstractExtraction/lib/lucene-core-4.0.0.jar"/>
 	<classpathentry kind="lib" path="F:/Eclipse_workspace/AbstractExtraction/lib/lucene-queryparser-4.0.0.jar"/>
 	<classpathentry kind="lib" path="F:/Eclipse_workspace/AbstractExtraction/lib/stanford-postagger.jar"/>
 	<classpathentry kind="lib" path="F:/Eclipse_workspace/AbstractExtraction/lib/trove.jar"/>
@@ -15,6 +14,18 @@
 	<classpathentry kind="lib" path="lib/edu.mit.jwi_2.3.3_jdk.jar">
 		<attributes>
 			<attribute name="javadoc_location" value="file:/F:/Eclipse_workspace/AbstractExtraction/javadocs/edu.mit.jwi_2.3.3_javadoc"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="lib/jaxen-1.1.6.jar"/>
+	<classpathentry kind="lib" path="lib/jdom-2.0.5.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:platform:/resource/AbstractExtraction/lib/jdom-2.0.5-javadoc.jar!/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="lib/lucene-ant-3.0.2.jar"/>
+	<classpathentry kind="lib" path="lib/lucene-core-3.6.0.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:platform:/resource/AbstractExtraction/lib/jdom-2.0.5-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="output" path="bin"/>
