@@ -54,24 +54,6 @@ public class SentenceExtract extends AbstractExtractor{
 	
 	private int sentenceNum;
 	
-	public SentenceExtract(){}
-	
-	public SentenceExtract(String segPath, String dicPath) throws Exception{
-		cWSTagger = new CWSTagger(segPath);
-		stopWords = new StopWords(dicPath);
-	}
-	public SentenceExtract(CWSTagger tag, String dicPath){
-		this.cWSTagger = tag;
-		stopWords = new StopWords(dicPath);
-	}
-	/**
-	 * 目前所用的构造函数
-	 */
-	public SentenceExtract(CWSTagger tag, StopWords test){
-		this.cWSTagger = tag;
-		this.stopWords = test;
-	}
-	
 	private SDataSet getSentence(String[] sentences){
 		Set<String> set = new TreeSet<String>();
 		SDataSet sds = new SDataSet();
@@ -102,9 +84,9 @@ public class SentenceExtract extends AbstractExtractor{
 	/**
 	 * 构建TextRank图
 	 */
-	private SDataSet mapInit(SDataSet sDataSet){
+	private SDataSet mapInit(SDataSet sDataSet) throws Exception{
 		
-		JWSSimilar similar = new JWSSimilar(cWSTagger, stopWords);
+		JWSSimilar similar = new JWSSimilar();
 		
 		//计算sT的阈值
 		ArrayList<Double> weightList = new ArrayList<>();
@@ -114,7 +96,7 @@ public class SentenceExtract extends AbstractExtractor{
 			{
 				String sentence1 = sDataSet.uniqueSentenceList.get(i);
 				String sentence2 = sDataSet.uniqueSentenceList.get(j);
-				double similarScore = similar.getSentenceSimilirity(sentence1, sentence2);
+				double similarScore = similar.getSentenceSimilarity(sentence1, sentence2);
 				weightList.add(similarScore);
 			}
 		}
@@ -132,7 +114,7 @@ public class SentenceExtract extends AbstractExtractor{
 			for (int j = 0; j < sDataSet.uniqueSentenceList.size(); j++) {
 				String sentence1 = sDataSet.uniqueSentenceList.get(i);
 				String sentence2 = sDataSet.uniqueSentenceList.get(j);
-				double similarity = similar.getSentenceSimilirity(sentence1, sentence2);
+				double similarity = similar.getSentenceSimilarity(sentence1, sentence2);
 				if(i != j &&  similarity > sRValue) {
 					similiritySum += similarity;
 				}
@@ -166,7 +148,7 @@ public class SentenceExtract extends AbstractExtractor{
 			for(int j = i + 1; j <  sDataSet.uniqueSentenceList.size(); j++){
 				sentence2 = sDataSet.uniqueSentenceList.get(j);
 				index2 = treeMap.get(sentence2);
-				double similarScore = similar.getSentenceSimilirity(sentence1, sentence2);
+				double similarScore = similar.getSentenceSimilarity(sentence1, sentence2);
 				//OUTPUT
 				System.out.println(sentence1 + "--->" + sentence2 + ":" + similarScore);
 				//WHY:原来加的是单向边？
@@ -302,7 +284,7 @@ public class SentenceExtract extends AbstractExtractor{
 		return mapList;
 	}
 	
-	public SDataSet proceed(String[] words){
+	public SDataSet proceed(String[] words) throws Exception{
 		SDataSet sds;
 		//WHY
 		sds = getSentence(words);
@@ -318,7 +300,6 @@ public class SentenceExtract extends AbstractExtractor{
 		return sds;
 	}
 	
-	
 	/**
 	 * 按句子数抽取
 	 */
@@ -326,8 +307,13 @@ public class SentenceExtract extends AbstractExtractor{
 		String[] sentences;
 //		这是Fudannlp中的断句函数，太naive
 //		sentences = Sentenizer.split(str);
-		sentences = StanfordSentenceDetector.split(docPath);
-		SDataSet sds = proceed(sentences);
+		sentences = SentenceDetector.split(docPath);
+		SDataSet sds = null;
+		try {
+			sds = proceed(sentences);
+		} catch (Exception e) {
+			
+		}
 		LinkedHashMap<String,Integer> mapList = selectTop(num, sds);
 		return mapList;
 	}
@@ -337,13 +323,12 @@ public class SentenceExtract extends AbstractExtractor{
 	 * @param docPath 文本路径
 	 * @param sR 比例(0-1)，超过此比例的权重才回建边
 	 * @param sT 比例(0-1)，只选取超过此比例的句子作为最终结果
-	 * @return
 	 */
-	public Map<String,Integer> extract(String docPath, double sR, double sT){
+	public Map<String,Integer> extract(String docPath, double sR, double sT) throws Exception{
 		this.sR = sR;
 		this.sT = sT;
 		String[] sentences;
-		sentences = StanfordSentenceDetector.split(docPath);
+		sentences = SentenceDetector.split(docPath);
 		SDataSet sds = proceed(sentences);
 		LinkedHashMap<String,Integer> mapList = selectTop((int)(this.sT * sentenceNum), sds);
 		return mapList;
@@ -356,7 +341,6 @@ public class SentenceExtract extends AbstractExtractor{
 	public String extract(String str, int num, boolean isWeighted) {
 		return extract(str,num).toString();
 	}
-	
 }
 
 
