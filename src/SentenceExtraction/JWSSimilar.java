@@ -21,10 +21,15 @@ public class JWSSimilar {
      */
     private JWS jws = new JWS(System.getenv("WNHOME"), "2.1");
     
+    SentenceProcess sProcess;
+    
+    public JWSSimilar() throws Exception{
+    	sProcess = new SentenceProcess();
+    }
+    
     public double getSentenceSimilarity(String sentence1, String sentence2) throws Exception
     {
 		double semSim = 0.0;
-		SentenceProcess sProcess = new SentenceProcess();
 		String[] words1 = sProcess.getMeaningfulWords(sentence1.toLowerCase());
 		String[] words2 = sProcess.getMeaningfulWords(sentence2.toLowerCase());
 		ArrayList<Double> simScore1 = new ArrayList<Double>();
