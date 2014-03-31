@@ -183,6 +183,7 @@ public class CWSTagger extends AbstractTagger {
 		}
 		return res;
 	}
+	
 	/**
 	 * 得到分词结果 String[]，不进行断句
 	 * @param src 字符串

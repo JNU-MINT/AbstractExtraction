@@ -10,7 +10,6 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
-import org.apache.lucene.search.similarities.Similarity;
 import org.fnlp.app.keyword.AbstractExtractor;
 import org.fnlp.app.keyword.Graph;
 import org.fnlp.app.keyword.Vertex;
