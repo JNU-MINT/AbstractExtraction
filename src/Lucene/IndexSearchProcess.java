@@ -3,8 +3,10 @@ package Lucene;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
@@ -33,12 +35,14 @@ public class IndexSearchProcess {
 	IndexReader ir = null;
 	IndexSearcher is = null;
 	Directory id = null;
+	String[] allFieldNameArray;
 
 	public IndexSearchProcess(String path) throws CorruptIndexException,
 			IOException {
 		id = FSDirectory.open(new File(path));
 		ir = IndexReader.open(id);
 		is = new IndexSearcher(ir);
+		allFieldNameArray = this.listFieldName();
 	}
 
 	/**
@@ -58,6 +62,7 @@ public class IndexSearchProcess {
 	}
 
 	// 搜索
+	//TODO:增加函数返回
 	public void search(String field, String word) throws Exception {
 		QueryParser queryParser = new QueryParser(Version.LUCENE_36, field,
 				new StandardAnalyzer(Version.LUCENE_36));
@@ -98,14 +103,15 @@ public class IndexSearchProcess {
 	/**
 	 * 多field搜索
 	 */
-	public void searchInMultiFields(String[] fieldsForSearch,
-			String wordForSearch) throws ParseException, IOException {
+	public Map<String, Double> searchInMultiFields(String[] fieldsForSearch,
+			String wordForSearch, int resultNum) throws ParseException, IOException {
 		MultiFieldQueryParser multiFieldQueryParser = new MultiFieldQueryParser(
 				Version.LUCENE_36, fieldsForSearch, new StandardAnalyzer(
 						Version.LUCENE_36));
 		Query query = multiFieldQueryParser.parse(wordForSearch);
-		TopDocs topDocs = is.search(query, Integer.MAX_VALUE);
-		System.out.println("共有" + topDocs.totalHits + "条记录");
+		TopDocs topDocs = is.search(query, resultNum);
+		System.out.println(wordForSearch + " " + topDocs.totalHits + " hit(s)");
+		
 		// ScoreDoc [] sd=topDocs.scoreDocs;
 		// // if(sd!=null){
 		// int l=sd.length;
@@ -128,14 +134,19 @@ public class IndexSearchProcess {
 		// System.out.println("\n----------------");
 		// }
 		// }
+		Map<String, Double> fileNameMap = new HashMap<String, Double>();
 		ScoreDoc[] scoreDocs = topDocs.scoreDocs;
 		if (scoreDocs != null) {
 			for (ScoreDoc sdTemp : scoreDocs) {
 				Document docTemp = ir.document(sdTemp.doc);
-				System.out.println(docTemp.get("fileName"));
+				fileNameMap.put(docTemp.get("fileName"), new Double(sdTemp.score));
+				//System.out.println(docTemp.get("fileName"));
 			}
 		}
-		this.closeAll();
+		//为了提供多次搜索
+		//搜索完不关闭资源
+		//this.closeAll();
+		return fileNameMap;
 	}
 
 	/**
@@ -145,9 +156,9 @@ public class IndexSearchProcess {
 	 * @throws ParseException
 	 * @throws IOException
 	 */
-	public void searchInAllFields(String wordForSearch) throws ParseException,
+	public Map<String, Double> searchInAllFields(String wordForSearch, int resultNum) throws ParseException,
 			IOException {
-		this.searchInMultiFields(this.listFieldName(), wordForSearch);
+		return this.searchInMultiFields(allFieldNameArray, wordForSearch, resultNum);
 	}
 
 	// 分页查询
