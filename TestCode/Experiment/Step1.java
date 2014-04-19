@@ -13,10 +13,10 @@ import edu.fudan.nlp.corpus.StopWords;
 
 public class Step1 {
 
-	public Set<String> ExcuteStep1() throws Exception {
+	public Set<String> ExcuteStep1(String TextPath) throws Exception {
 		SentenceExtract extractor = new SentenceExtract();
 		JWIStemmer jwiStemmer = new JWIStemmer();
-		Map<String, Integer> map = extractor.extract("TestData/TestData4",
+		Map<String, Integer> map = extractor.extract(TextPath,
 				1.0 / 4.0, 1.0 / 3.0);
 		Set<String> wordSet = new TreeSet<String>();
 		SentenceProcess sProcess = new SentenceProcess();
@@ -37,6 +37,6 @@ public class Step1 {
 
 	public static void main(String[] args) throws Exception {
 		Step1 step1 = new Step1();
-		System.out.println(step1.ExcuteStep1());
+		System.out.println(step1.ExcuteStep1("TestData/TestData5"));
 	}
 }
