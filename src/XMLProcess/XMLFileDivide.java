@@ -35,16 +35,16 @@ public class XMLFileDivide {
 	/**
 	 * 把一个包含很多个xml文件 完整内容的文件分为单独的xml文件 保存在文件名同名的文件夹下面 TODO:代码风格不好,考虑重构
 	 * 
-	 * @param XMLPath
+	 * @param bigXMLPath
 	 *            目标xml文件的完整路径名
 	 * @return 分割完后的各个小的xml文件
 	 */
-	public File[] divide(String XMLPath) throws Exception {
-		File bigXmlFile = new File(XMLPath);
+	public File[] divide(String bigXMLPath, String smallXMLPath)
+			throws Exception {
+		File bigXmlFile = new File(bigXMLPath);
 		ArrayList<File> fileList = new ArrayList<File>();
 		br = new BufferedReader(new FileReader(bigXmlFile));
-		File xmlDir = new File(XMLPath.substring(0, XMLPath.lastIndexOf(".")));
-		// 创建文件夹
+		File xmlDir = new File(smallXMLPath);
 		xmlDir.mkdirs();
 		String line;
 		String headLine = new String(
@@ -58,14 +58,24 @@ public class XMLFileDivide {
 				if (fileCount > 0) {
 					String xmlPara = null;
 					try {
-					xmlPara = GetXmlPara(sb.toString(), fileCount);
+						xmlPara = GetXmlPara(sb.toString(), fileCount);
+					} catch (Exception e) {
+						System.out.println(sb.toString() + "  "
+								+ String.valueOf(fileCount));
 					}
-					catch (Exception e)
-					{
-						System.out.println(sb.toString() + "  " + String.valueOf(fileCount));
+					String fileName = xmlDir.getAbsolutePath() + "/" + xmlPara;
+					String suffix = ".xml";
+					int id = 1;
+					if (!(new File(fileName + suffix).exists())) {
+						fileOutput = new File(fileName + suffix);
+					} else {
+						while ((fileOutput = new File(xmlDir.getAbsolutePath()
+								+ "\\addition" + "-" + String.valueOf(id) + "-"
+								+ xmlPara + suffix)).exists()) 
+						{
+							id++;
+						}
 					}
-					fileOutput = new File(xmlDir.getAbsolutePath() + "/"
-							+ xmlPara + "_" + String.valueOf(fileCount) + ".xml");
 					bw = new BufferedWriter(new FileWriter(fileOutput));
 					bw.write(sb.toString());
 					bw.flush();
@@ -85,18 +95,23 @@ public class XMLFileDivide {
 		XMLParse xmlParse = new XMLParse();
 		xmlParse.SetXmlByString(xmlString);
 		StringBuilder sb = new StringBuilder();
-		String paraString =xmlParse.Search("//publication-reference/document-id/country") + "-";
-		if(paraString.isEmpty())
+		String paraString = xmlParse
+				.SelectFirstNode("//publication-reference/document-id/country")
+				+ "-";
+		if (paraString.isEmpty())
 			return String.valueOf(fileCount);
 		sb.append(paraString);
-		
-		paraString =xmlParse.Search("//publication-reference/document-id/doc-number") + "-";
-		if(paraString.isEmpty())
+
+		paraString = xmlParse
+				.SelectFirstNode("//publication-reference/document-id/doc-number")
+				+ "-";
+		if (paraString.isEmpty())
 			return String.valueOf(fileCount);
 		sb.append(paraString);
-		
-		paraString =xmlParse.Search("//publication-reference/document-id/kind");
-		if(paraString.isEmpty())
+
+		paraString = xmlParse
+				.SelectFirstNode("//publication-reference/document-id/kind");
+		if (paraString.isEmpty())
 			return String.valueOf(fileCount);
 		sb.append(paraString);
 		
@@ -145,7 +160,7 @@ public class XMLFileDivide {
 	}
 
 	/**
-	 * 删除某个文件夹及其下面的内容 其实也具有删除单个文件的功能 TODO：考虑能不能把两个功能合并
+	 * 删除某个文件夹及其下面的内容 其实也具有删除单个文件的功能. TODO：考虑能不能把两个功能合并
 	 * 
 	 * @param dir
 	 *            目标文件夹
