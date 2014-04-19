@@ -8,6 +8,10 @@ import org.jdom2.*;
 import org.jdom2.input.*;
 import org.jdom2.xpath.XPath;
 
+/**
+ * 
+ * @author qiusd
+ */
 @SuppressWarnings("deprecation")
 public class XMLParse {
 
@@ -61,14 +65,22 @@ public class XMLParse {
 		return sb.toString();
 	}
 
+	/**
+	 * 自己实现的首元素提取
+	 * 输入为当级标签
+	 */
 	public String GetFirstElememt(String targetName) throws Exception {
 		Element root = doc.getRootElement();
 		Element element = TraverseForFirstElement(root, targetName);
 		if (element == null)
-			return "not found";
+			return null;
 		return element.getValue();
 	}
 
+	
+	/**
+	 * 递归遍历函数
+	 */
 	public Element TraverseForFirstElement(Element rootElement,
 			String targetName) throws Exception {
 		if (rootElement.getName() == targetName) {
@@ -85,13 +97,14 @@ public class XMLParse {
 		return null;
 	}
 	
-	public String Search(String queryString) throws Exception {
+	/**
+	 * XPath实现首元素提取
+	 * 输入为完整标签路径
+	 */
+	public String SelectFirstNode(String queryString) throws Exception {
 		Element root = doc.getRootElement();
-		
 		Element element = (Element) XPath.selectSingleNode(root, queryString);
-		
 		return element.getText();
-		
 	}
 
 }
