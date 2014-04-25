@@ -2,7 +2,7 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="TestCode"/>
-	<classpathentry kind="src" path="FDNLP"/>
+	<classpathentry kind="src" path="fdNLP"/>
 	<classpathentry kind="lib" path="F:/Eclipse_workspace/AbstractExtraction/lib/commons-cli-1.2.jar"/>
 	<classpathentry kind="lib" path="F:/Eclipse_workspace/AbstractExtraction/lib/lingpipe-4.1.0.jar"/>
 	<classpathentry kind="lib" path="F:/Eclipse_workspace/AbstractExtraction/lib/lucene-queryparser-4.0.0.jar"/>
@@ -27,5 +27,7 @@
 			<attribute name="javadoc_location" value="jar:platform:/resource/AbstractExtraction/lib/jdom-2.0.5-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="lib/javacsv.jar"/>
+	<classpathentry kind="lib" path="lib/libsvm.jar" sourcepath="javadocs/libsvm"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
