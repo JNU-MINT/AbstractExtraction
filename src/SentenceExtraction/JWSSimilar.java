@@ -2,6 +2,8 @@ package SentenceExtraction;
 import java.util.ArrayList;
 import java.lang.String;
 
+import processor.SentenceProcessor;
+
 import edu.sussex.nlp.jws.JWS;
 import edu.sussex.nlp.jws.Lin;
 
@@ -21,10 +23,10 @@ public class JWSSimilar {
      */
     private JWS jws = new JWS(System.getenv("WNHOME"), "2.1");
     
-    SentenceProcess sProcess;
+    SentenceProcessor sProcess;
     
     public JWSSimilar() throws Exception{
-    	sProcess = new SentenceProcess();
+    	sProcess = new SentenceProcessor();
     }
     
     public double getSentenceSimilarity(String sentence1, String sentence2) throws Exception
@@ -42,7 +44,7 @@ public class JWSSimilar {
 		}
 		for(int i = 0; i < words1.length; i++) {
 			for(int j = 0; j < words2.length; j++) {
-				double simScore = getMaxScoreOfLin(words1[i], words2[j]);
+				double simScore = getWordSimilarity(words1[i], words2[j]);
 				simScore1.set(i, Math.max(simScore1.get(i), simScore));
 				simScore2.set(j, Math.max(simScore2.get(j), simScore));
 			}
@@ -62,11 +64,11 @@ public class JWSSimilar {
     /**
      * 计算词语相似度
      */
-    private double getMaxScoreOfLin(String word1,String word2){
+    public double getWordSimilarity(String word1,String word2){
         Lin lin = jws.getLin();
-        double nounScore = lin.max(word1, word2, "n");
-        double verbScore = lin.max(word1, word2, "v");
-        double maxScore = Math.max(nounScore, verbScore);
+        double nScore = lin.max(word1, word2, "n");
+        double vScore = lin.max(word1, word2, "v");
+        double maxScore = Math.max(nScore, vScore);
         return maxScore;
     }
 }
