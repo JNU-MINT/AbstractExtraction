@@ -26,15 +26,15 @@ public class JWIStemmer {
 		wns = new WordnetStemmer(dict);
 	}
 
-	public List<String> FindAllStems(String word) {
+	public List<String> getAllStems(String word) {
 		return wns.findStems(word, null);
 	}
 
-	public String FindFirstStem(String word) {
+	public String getFirstStem(String word) {
 		List<String> stemList = wns.findStems(word, null);
 		if (!stemList.isEmpty())
 			return stemList.get(0);
-		return null;
+		return word;
 	}
 
 }
