@@ -7,17 +7,15 @@ import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.input.SAXBuilder;
 
-import XMLProcess.XMLParse;
+import processor.XMLParser;
 
 
 public class XMLParseTest {
-
 	public static void main(String[] args) throws Exception {
-		
-		XMLParse xmlParse = new XMLParse(new File("C:\\Users\\qiusd\\Desktop\\patent\\ipg130115\\US-RE043935-E1_438.xml"));
-		
+		XMLParser xmlParse = new XMLParser(new File("F:\\patent(F)\\uspatent2014\\smallxml\\US-08621662-B2.xml"));
 //		String string = xmlParse.GetFirstElememt("doc-number");
 //		System.out.println(string);
-		System.out.println(xmlParse.Search("//publication-reference/document-id/country"));
+		System.out.println(xmlParse.getFirstNode("//abstract/p"));
+		
 	}
 }
