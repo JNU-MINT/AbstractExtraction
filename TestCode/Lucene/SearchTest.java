@@ -1,15 +1,15 @@
 package Lucene;
 
-import Lucene.IndexSearchProcess;
+import Lucene.SearchProcessor;
 
 public class SearchTest {
 
 	public static void main(String[] args) throws Exception {
-		IndexSearchProcess st = new IndexSearchProcess(
+		SearchProcessor st = new SearchProcessor(
 				"F:\\patent(F)\\index");
 //		String[] fields = {"last-name"};
 //		st.searchInMultiFields(fields, "Wesinger, Jr. Ralph E.");
 		//st.search("date", "20111227");
-		System.out.println(st.searchInAllFields("guangzhou", Integer.MAX_VALUE));
+		System.out.println(st.searchInAllFields("20111220", Integer.MAX_VALUE));
 	}
 }

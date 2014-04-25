@@ -2,34 +2,58 @@ package Lucene;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Date;
 
-import Lucene.IndexCreateProcess;
-import XMLProcess.XMLFileDivide;
+import processor.XMLDivider;
 
+import Lucene.IndexCreateProcessor;
 
 public class IndexSmallXMLTest {
 	/**
-	 * 测试获取若干小的xml文件建索引 直接对已经分割好的小的xml做索引
-	 * 
-	 * @param args
+	 * 对某文件夹中已经分割好的小的xml做索引
 	 */
+	@SuppressWarnings("deprecation")
+	//2009,2010,2011,2012,2013
 	public static void main(String[] args) {
-		long l1 = System.currentTimeMillis();
-		XMLFileDivide fp = new XMLFileDivide();
-		IndexCreateProcess indexProcess = new IndexCreateProcess(
-				"C:\\Users\\qiusd\\Desktop\\index");
+		XMLDivider fp = new XMLDivider();
+		IndexCreateProcessor indexProcess = new IndexCreateProcessor(
+				"F:\\patent(F)\\index");
 		try {
 			File[] smallXMLs = fp
-					.getXMLFilesByDir("C:\\Users\\qiusd\\Desktop\\patent\\新建文件夹");
+					.getXMLFilesByDir("G:\\patent(G)\\uspatent2012\\smallxml");
+			
+			
+			System.out.println(new Date().toLocaleString());
+			System.out.println("get all xml file done");
 			for (int i = 0; i < smallXMLs.length; i++) {
 				indexProcess.addToIndex(smallXMLs[i]);
+				if (i % 1000 == 0)
+				{
+					System.out.println(new Date().toLocaleString());
+					System.out.println("have indexed" + i);
+				}
 			}
+			
+			File[] smallXMLs1 = fp
+					.getXMLFilesByDir("G:\\patent(G)\\uspatent2013\\smallxml");
+			
+			System.out.println(new Date().toLocaleString());
+			System.out.println("get all xml file done");
+			for (int i = 0; i < smallXMLs1.length; i++) {
+				indexProcess.addToIndex(smallXMLs1[i]);
+				if (i % 1000 == 0)
+				{
+					System.out.println(new Date().toLocaleString());
+					System.out.println("have indexed" + i);
+				}
+			}
+			
+			
 			try {
 				fp.closeAll();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			// 需要关闭写索引的资源，才能完成索引操作
 			indexProcess.closeWriter();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -41,7 +65,6 @@ public class IndexSmallXMLTest {
 			}
 			indexProcess.closeWriter();
 		}
-		long l2 = System.currentTimeMillis();
-		System.out.println((l2 - l1) / 1000.0 + "s");
+		System.out.println("all done");
 	}
 }

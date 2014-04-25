@@ -4,8 +4,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Date;
 
-import Lucene.IndexCreateProcess;
-import XMLProcess.XMLFileDivide;
+import processor.XMLDivider;
+
+import Lucene.IndexCreateProcessor;
 
 
 
@@ -19,15 +20,16 @@ public class IndexBigXMLTest {
 	public static void main(String[] args) {
 		Date d1 = new Date();
 		long l1 = System.currentTimeMillis();
-		XMLFileDivide fp = new XMLFileDivide();
-		IndexCreateProcess indexProcess = new IndexCreateProcess(
+		XMLDivider fp = new XMLDivider();
+		IndexCreateProcessor indexProcess = new IndexCreateProcessor(
 				"C:\\Users\\qiusd\\Desktop\\index");
 		File[] fs;
 		try {
 			fs = fp.getXMLFilesByDir("C:\\Users\\qiusd\\Desktop\\patent");
 			if (fs != null && fs.length > 0)
 				for (File fTemp : fs) {
-					File[] smallXMLs = fp.divide(fTemp.getAbsolutePath());
+					String smallXMLPath = fTemp.getParentFile().getAbsolutePath();
+					File[] smallXMLs = fp.divide(fTemp.getAbsolutePath(), smallXMLPath);
 					System.out.println("divide finished");
 					for (int i = 0; i < smallXMLs.length; i++) {
 						indexProcess.addToIndex(smallXMLs[i]);
