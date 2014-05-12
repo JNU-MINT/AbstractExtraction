@@ -22,8 +22,20 @@ public class Word {
 	//词长特征值
 	public double wordLength;
 	
+	//TextRank排名
+	
+	public double textRank;
+	
+	//textRank数值
+	
+	public double textRankValue;
+	
+	
 	//类标号
 	//1为是，0为否
 	//考虑用别的数据类型代替
-	public int lable;
+	public double lable;
+	
+	//预测值
+	public double prediction;
 }
