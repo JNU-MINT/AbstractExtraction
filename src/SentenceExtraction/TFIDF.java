@@ -86,7 +86,7 @@ public class TFIDF {
 	 * 利用Lucene计算IDF
 	 */
 	private void calIdf(String text) throws Exception {
-		float D = 1265667;
+		float D = 498633;
 		SearchProcessor st = new SearchProcessor("F:\\patent(F)\\index");
 		for (String meaningfulWord : tfMap.keySet()) {
 			int count = st.getAllFieldsSearchNum(meaningfulWord);
