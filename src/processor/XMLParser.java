@@ -12,7 +12,8 @@ import org.jdom2.xpath.XPath;
 @SuppressWarnings("deprecation")
 public class XMLParser {
 
-	SAXBuilder sBuilder;
+	StringBuilder stringBuilder;
+	SAXBuilder saxBuilder;
 	Document doc;
 
 	public XMLParser() {
@@ -38,13 +39,13 @@ public class XMLParser {
 
 	public void setXmlByFile(File xmlFile) throws Exception {
 		String xmlString = fileToString(xmlFile);
-		sBuilder = new SAXBuilder();
-		doc = sBuilder.build(new StringReader(xmlString));
+		saxBuilder = new SAXBuilder();
+		doc = saxBuilder.build(new StringReader(xmlString));
 	}
 
 	public void setXmlByString(String xmlString) throws Exception {
-		sBuilder = new SAXBuilder();
-		doc = sBuilder.build(new StringReader(xmlString));
+		saxBuilder = new SAXBuilder();
+		doc = saxBuilder.build(new StringReader(xmlString));
 	}
 
 	/**
@@ -53,13 +54,13 @@ public class XMLParser {
 	 */
 	private String fileToString(File file) throws Exception {
 		BufferedReader br = new BufferedReader(new FileReader(file));
-		StringBuilder sb = new StringBuilder();
+		stringBuilder = new StringBuilder();
 		String line = null;
 		while ((line = br.readLine()) != null) {
-			sb.append(line + "\n");
+			stringBuilder.append(line + "\n");
 		}
 		br.close();
-		return sb.toString();
+		return stringBuilder.toString();
 	}
 
 	/**
