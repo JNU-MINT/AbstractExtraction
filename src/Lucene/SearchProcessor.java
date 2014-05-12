@@ -90,21 +90,25 @@ public class SearchProcessor {
 	public Map<String, Double> searchInMultiFields(String[] fieldsForSearch,
 			String wordForSearch, int resultNum) throws ParseException,
 			IOException {
-		MultiFieldQueryParser multiFieldQueryParser = new MultiFieldQueryParser(
-				Version.LUCENE_36, fieldsForSearch, new StandardAnalyzer(
-						Version.LUCENE_36));
-		Query query = multiFieldQueryParser.parse(wordForSearch);
-		TopDocs topDocs = is.search(query, resultNum);
-		System.out.println(wordForSearch + " " + topDocs.totalHits + " hit(s)");
-		Map<String, Double> fileNameMap = new HashMap<String, Double>();
-		for (ScoreDoc sdTemp : topDocs.scoreDocs) {
-			Document docTemp = ir.document(sdTemp.doc);
-			fileNameMap.put(docTemp.get("fileName"), new Double(sdTemp.score));
+		try {
+			MultiFieldQueryParser multiFieldQueryParser = new MultiFieldQueryParser(
+					Version.LUCENE_36, fieldsForSearch, new StandardAnalyzer(
+							Version.LUCENE_36));
+			Query query = multiFieldQueryParser.parse(wordForSearch);
+			TopDocs topDocs = is.search(query, resultNum);
+			System.out.println(wordForSearch + " " + topDocs.totalHits + " hit(s)");
+			Map<String, Double> fileNameMap = new HashMap<String, Double>();
+			for (ScoreDoc sdTemp : topDocs.scoreDocs) {
+				Document docTemp = ir.document(sdTemp.doc);
+				fileNameMap.put(docTemp.get("fileName"), new Double(sdTemp.score));
+			}
+			// 为了提供多次搜索
+			// 搜索完不关闭资源
+			// this.closeAll();
+			return fileNameMap;
+		} catch (Exception e) {
+			return new HashMap<String, Double>();
 		}
-		// 为了提供多次搜索
-		// 搜索完不关闭资源
-		// this.closeAll();
-		return fileNameMap;
 	}
 
 	/**
