@@ -17,9 +17,15 @@ import Lucene.SearchProcessor;
 import processor.SentenceProcessor;
 import processor.XMLParser;
 
+/**
+ * 算法步骤三
+ * 提取链接xml文件的的title
+ * @author qiusd
+ */
 public class Step3 {
 
 	PatentPathProcess patentPathProcess;
+	XMLParser xmlParser;
 
 	public Step3() throws Exception {
 		patentPathProcess = new PatentPathProcess();
@@ -50,17 +56,19 @@ public class Step3 {
 			for (String queryString : patent.addressBookSet) {
 				if (!queryString.isEmpty()) {
 					Map<String, Double> searchResultMap = st.searchInAllFields(
-							queryString, 2);
+							queryString, 3);
 					for (String fileName : searchResultMap.keySet()) {
-						String filePath = patentPathProcess
-								.getFilePath(fileName);
-						XMLParser xmlParser = new XMLParser(new File(filePath));
-						String outLinkTitle = xmlParser
-								.getFirstNode("//invention-title");
-						if (!outLinkTitle.isEmpty()) {
-							String[] titleWords = sentenceProcessor
-									.getStemmedWord(outLinkTitle);
-							patent.linkTitleSet.add(new ArrayList(Arrays.asList(titleWords)));
+						if (!fileName.contains("addition")) {
+							String filePath = patentPathProcess
+									.getFilePath(fileName);
+							xmlParser = new XMLParser(new File(filePath));
+							String outLinkTitle = xmlParser
+									.getFirstNode("//invention-title");
+							if (!outLinkTitle.isEmpty()) {
+								String[] titleWords = sentenceProcessor
+										.getStemmedWord(outLinkTitle);
+								patent.linkTitleSet.add(new ArrayList<String>(Arrays.asList(titleWords)));
+							}
 						}
 					}
 				}

@@ -10,6 +10,11 @@ import model.Patent;
 
 import Lucene.SearchProcessor;
 
+/**
+ * 算法步骤二
+ * 获取相关文件集合
+ * @author qiusd
+ */
 public class Step2 {
 
 	PatentPathProcess patentPathProcess;
@@ -25,7 +30,7 @@ public class Step2 {
 		SearchProcessor st = new SearchProcessor("F:\\patent(F)\\index");
 		for (String queryString : queryStrings) {
 			Map<String, Double> searchResultsMap = st.searchInAllFields(
-					queryString, 2);
+					queryString, 3);
 			for (String fileName : searchResultsMap.keySet()) {
 				if (!fileName.contains("addition")) {
 					if (relatedFileMap.containsKey(fileName)) {

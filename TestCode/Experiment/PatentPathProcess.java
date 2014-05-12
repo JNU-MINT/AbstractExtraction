@@ -9,10 +9,9 @@ import java.util.Map;
 import processor.CsvProcessor;
 import processor.XMLDivider;
 
-
-
 /**
- * 实现专利文件名到真实路径的映射 并将映射表存放于csv文件
+ * 实现专利文件名到专利绝对路径的映射
+ * 并将映射表存放于xmlPath.csv
  * @author qiusd
  */
 public class PatentPathProcess {
@@ -43,18 +42,16 @@ public class PatentPathProcess {
 		}
 		System.out.println(new Date().toLocaleString());
 		System.out.println("Get all xml path done");
-		CsvProcessor csvProcess = new CsvProcessor();
 		ArrayList<String[]> contentList = new ArrayList<String[]>();
 		for(Map.Entry<String, String> entry: entireXMLMap.entrySet()) {
 			String[] content = {entry.getKey(), entry.getValue()};
 			contentList.add(content);
 		}
-		csvProcess.writeToCsv("./xmlPath.csv", contentList);
+		CsvProcessor.writeToCsv("./xmlPath.csv", contentList);
 	}
 	
 	public void generateXMLMap() throws Exception{
-		CsvProcessor csvProcess = new CsvProcessor();
-		ArrayList<String[]> csvList = csvProcess.readFromCsv("./xmlPath.csv");
+		ArrayList<String[]> csvList = CsvProcessor.readFromCsv("./xmlPath.csv");
 		for (String[] strings : csvList) {
 			entireXMLMap.put(strings[0], strings[1]);
 		}

@@ -9,22 +9,28 @@ import processor.XMLParser;
 import model.Document;
 import model.Word;
 
+/**
+ * xml数据集的前期处理
+ * @author qiusd
+ */
 public class DocHandler {
-	
+
 	public Document getDoc(String filePath) throws Exception {
 		Document doc = new Document();
-		
+
 		XMLParser xmlParser = new XMLParser(new File(filePath));
-		
+
 		String titlestrString = xmlParser.getFirstNode("//invention-title");
 		doc.abstractString = xmlParser.getFirstNode("//abstract/p");
-		
+
 		SentenceProcessor sentenceProcessor = new SentenceProcessor();
-		
-		String[] titleArray = sentenceProcessor.getStemmedWord(titlestrString);
+
+		String[] titleArray = sentenceProcessor.getStemmedWord(titlestrString
+				.toLowerCase());
 		doc.titleWords = new ArrayList<String>(Arrays.asList(titleArray));
-		
-		String[] abstractWordArray = sentenceProcessor.getStemmedWord(doc.abstractString);
+
+		String[] abstractWordArray = sentenceProcessor
+				.getStemmedWord(doc.abstractString.toLowerCase());
 		for (String abstractWord : abstractWordArray) {
 			Word word = new Word();
 			word.text = abstractWord;
@@ -32,9 +38,10 @@ public class DocHandler {
 		}
 		return doc;
 	}
-	
+
 	public static void main(String[] args) throws Exception {
 		DocHandler docHandler = new DocHandler();
-		Document doc = docHandler.getDoc("F:\\patent(F)\\uspatent2014\\smallxml\\US-08621662-B2.xml");
+		Document doc = docHandler
+				.getDoc("F:\\patent(F)\\uspatent2014\\smallxml\\US-08621662-B2.xml");
 	}
 }

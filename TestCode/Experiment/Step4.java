@@ -3,6 +3,11 @@ package Experiment;
 import model.Document;
 import model.Word;
 
+/**
+ * 算法步骤四
+ * 特征值抽取
+ * @author qiusd
+ */
 public class Step4 {
 	
 	public Document excuteStep4(Document doc)

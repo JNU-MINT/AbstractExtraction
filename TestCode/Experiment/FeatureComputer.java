@@ -9,6 +9,10 @@ import model.Document;
 import model.Patent;
 import model.Word;
 
+/**
+ * 各个特征值的计算
+ * @author qiusd
+ */
 public class FeatureComputer {
 	
 	JWSSimilar jwsSimilar;
@@ -37,9 +41,6 @@ public class FeatureComputer {
 				latterValue += patent.relatedScore * patent.linkTitleSet.size();
 			}
 			abstractWord.linkFeature = formerValue / latterValue;
-//			if (abstractWord.linkFeature == 0) {
-//				throw new Exception();
-//			}
 		}
 		return doc;
 	}
@@ -86,6 +87,17 @@ public class FeatureComputer {
 		return doc;
 	}
 	
+//	已经在step1中改进了这个功能
+//	private Document computeTextRankTag(Document doc) {
+//		for (Word word : doc.abstractWords) {
+//			if (doc.queryWordSet.contains(word.text)) {
+//				word.textRank = 1;
+//			}
+//		}
+//		return doc;
+//	}
+	
+	
 	private Document decideLabel(Document doc) {
 		
 		for (Word abstractWord : doc.abstractWords) {
@@ -103,6 +115,7 @@ public class FeatureComputer {
 		doc = computeTfidf(doc);
 		doc = computePosition(doc);
 		doc = computeWordLength(doc);
+//		computeTextRankTag(doc);
 		doc = decideLabel(doc);
 		return doc;
 	}
