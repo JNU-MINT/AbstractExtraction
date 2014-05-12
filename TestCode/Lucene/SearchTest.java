@@ -10,6 +10,6 @@ public class SearchTest {
 //		String[] fields = {"last-name"};
 //		st.searchInMultiFields(fields, "Wesinger, Jr. Ralph E.");
 		//st.search("date", "20111227");
-		System.out.println(st.searchInAllFields("20111220", Integer.MAX_VALUE));
+		st.searchInAllFields("us-patent-grant", Integer.MAX_VALUE);
 	}
 }
