@@ -54,7 +54,7 @@ public class Step1Word {
 
 	public static void main(String[] args) throws Exception {
 		
-		DocHandler docHandler = new DocHandler();
+		XMLDocHandler docHandler = new XMLDocHandler();
 		Document doc = docHandler.getDoc("F:\\patent(F)\\uspatent2014\\140107\\xml\\US-08623430-B2.xml");
 		Step1Word step1 = new Step1Word();
 		step1.ExcuteStep1(doc);

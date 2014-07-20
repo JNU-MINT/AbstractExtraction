@@ -34,16 +34,16 @@ public class Step5 {
 		return datasetList;
 	}
 
-	public void excute(String trainDirPath) throws Exception {
+	public void excute(String datasetDirPath) throws Exception {
 		FileProcessor fileProcessor = new FileProcessor();
-		List<String> trainPaths = fileProcessor.getFilesByDir(trainDirPath);
-		ArrayList<Word> trainWordList = getData(trainPaths);
+		List<String> datasetPaths = fileProcessor.getFilesByDir(datasetDirPath);
+		ArrayList<Word> datasetWordList = getData(datasetPaths);
 		SVM svm = new SVM();
-		svm.train(trainWordList);
+		svm.train(datasetWordList);
 	}
 
 	public static void main(String[] args) throws Exception {
 		Step5 step5 = new Step5();
-		step5.excute("F:\\patent(F)\\uspatent2014\\140107\\experiment\\train");
+		step5.excute("F:\\百度云\\研究方向\\毕业设计\\实验\\140506\\dataset_selected50_1");
 	}
 }

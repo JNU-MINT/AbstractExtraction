@@ -18,7 +18,7 @@ public class Step4 {
 	}
 	
 	public static void main(String[] args) throws Exception {
-		DocHandler docHandler = new DocHandler();
+		XMLDocHandler docHandler = new XMLDocHandler();
 		Document doc = docHandler
 				.getDoc("F:\\patent(F)\\uspatent2014\\smallxml\\US-08621662-B2.xml");
 		Step1Word step1 = new Step1Word();

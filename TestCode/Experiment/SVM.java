@@ -82,15 +82,16 @@ public class SVM {
 		
 		double precision, recall, f1score;
 		int a = 0, b = 0, c = 0, d = 0;
-		for(int paraG = 1; paraG <= 6; paraG++) {
-			for(int paraC = 6; paraC <= 11; paraC++) {
-				if (paraG >= 3 && paraC >= 8) {
-					continue;
-				}
+		//参数gamma为8-32
+		for(int paraG = 3; paraG <= 5; paraG++) {
+			//参数C为64-512
+			for(int paraC = 6; paraC <= 9; paraC++) {
 				param.gamma = Math.pow(2.0, paraG);
 				param.C = Math.pow(2.0, paraC);
 				double[] target = new double[problem.l];
+				long startMili=System.currentTimeMillis();
 				svm.svm_cross_validation(problem, param, 10, target);
+				long endMili=System.currentTimeMillis();
 				a = 0;
 				b = 0;
 				c = 0;
@@ -109,12 +110,14 @@ public class SVM {
 						d++;
 					}
 				}
-				System.out.print("a == " + a + " b == " + b + " c == " + c + " d == " + d);
-				System.out.println("  gamma == " + param.gamma + "  C ==" + param.C);
+				System.out.println("a == " + a + " b == " + b + " c == " + c + " d == " + d);
+				System.out.print("gamma == " + param.gamma + " C == " + param.C);
+				System.out.print("  time = " + (double)(endMili - startMili) / 1000.0 + "s");
+				//TODO：这里似乎弄反了
 				precision = (double) a/(a+b);
 				recall = (double) a/(a+c);
 				f1score = 2.0 * precision * recall / (precision + recall);
-				System.out.println("precision = " + precision + " recall = " + recall + " f1score = " + f1score );
+				System.out.println("  precision = " + precision + " recall = " + recall + " f1score = " + f1score );
 			}
 		}
 		
