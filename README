@@ -1,2 +1,28 @@
-NLPsrc和NLPapps：Fudannlp的内部代码
-src：我们的代码
+Author:q.s.d
+
+项目代码结构：
+AbstractExtraction
+|-src:程序基本功能模块
+	|-Lucene:Lucene索引及搜索功能
+	|-model:项目所需的文本类定义
+	|-processor:对File、Csv、XML文件的处理类
+	|-SentenceExtraction:断句、词相似度计算、TDIDF等功能实现模块
+|-TestCode:
+	|-Experiment:项目具体功能实现
+	|-Lucene:src/Lucene包测试代码
+	|-SentenceExtraction:src/SentenceExtraction包测试代码
+	|-svm:svm测试代码
+	|-XMLProcess:XML处理测试代码
+|-fdNLP:fdNLP项目源代码，包括了某些本项目所需要的功能（如TextRank）
+|-lib:项目所需的包
+|-TestData:测试文本
+|-Readme:本文档
+|-xmlPath.csv:专利文献从文件名到其物理路径的
+|-其他文件及文件夹:项目所需
+
+配置方法：
+|-下载该工程文件及代码
+|-下载专利文本
+|-配置好专利文本路径
+|-按TestCode/Experiment中的代码按步骤处理文本，实现算法
+|-具体配置及步骤步骤将在近期给出
