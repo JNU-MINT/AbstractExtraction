@@ -19,8 +19,8 @@ public class Step4 {
 	
 	public static void main(String[] args) throws Exception {
 		XMLDocHandler docHandler = new XMLDocHandler();
-		Document doc = docHandler
-				.getDoc("F:\\patent(F)\\uspatent2014\\smallxml\\US-08621662-B2.xml");
+		// 记得配置路径
+		Document doc = docHandler.getDoc("C:\\Data\\AbstractExtraction\\experiment\\US-08341762-B2.xml");
 		Step1Word step1 = new Step1Word();
 		doc = step1.ExcuteStep1(doc);
 		Step2 step2 = new Step2();

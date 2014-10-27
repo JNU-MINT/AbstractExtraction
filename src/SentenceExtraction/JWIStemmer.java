@@ -18,7 +18,8 @@ public class JWIStemmer {
 	private WordnetStemmer wns;
 
 	public JWIStemmer() throws Exception {
-		String wnhome = System.getenv("WNHOME") + "\\2.1";
+		// TODO: 配好路径
+		String wnhome =  "C:\\Program Files (x86)\\WordNet\\2.1";
 		String path = wnhome + File.separator + "dict";
 		URL url = new URL("file", null, path);
 		IDictionary dict = new Dictionary(url);

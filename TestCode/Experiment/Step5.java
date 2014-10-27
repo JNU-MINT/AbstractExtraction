@@ -44,6 +44,7 @@ public class Step5 {
 
 	public static void main(String[] args) throws Exception {
 		Step5 step5 = new Step5();
+		// 记得配置路径
 		step5.excute("F:\\百度云\\研究方向\\毕业设计\\实验\\140506\\dataset_selected50_1");
 	}
 }

@@ -3,13 +3,6 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="TestCode"/>
 	<classpathentry kind="src" path="fdNLP"/>
-	<classpathentry kind="lib" path="F:/Eclipse_workspace/AbstractExtraction/lib/commons-cli-1.2.jar"/>
-	<classpathentry kind="lib" path="F:/Eclipse_workspace/AbstractExtraction/lib/lingpipe-4.1.0.jar"/>
-	<classpathentry kind="lib" path="F:/Eclipse_workspace/AbstractExtraction/lib/lucene-queryparser-4.0.0.jar"/>
-	<classpathentry kind="lib" path="F:/Eclipse_workspace/AbstractExtraction/lib/stanford-postagger.jar"/>
-	<classpathentry kind="lib" path="F:/Eclipse_workspace/AbstractExtraction/lib/trove.jar"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jdk1.7.0_09"/>
-	<classpathentry kind="lib" path="F:/Eclipse_workspace/AbstractExtraction/lib/edu.sussex.nlp.jws.beta.11.jar"/>
 	<classpathentry kind="lib" path="lib/edu.mit.jwi_2.3.3_jdk.jar">
 		<attributes>
 			<attribute name="javadoc_location" value="file:/F:/Eclipse_workspace/AbstractExtraction/javadocs/edu.mit.jwi_2.3.3_javadoc"/>
@@ -29,5 +22,15 @@
 	</classpathentry>
 	<classpathentry kind="lib" path="lib/javacsv.jar"/>
 	<classpathentry kind="lib" path="lib/libsvm.jar" sourcepath="javadocs/libsvm"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="lib/commons-cli-1.2.jar"/>
+	<classpathentry kind="lib" path="lib/edu.sussex.nlp.jws.beta.11.jar"/>
+	<classpathentry kind="lib" path="lib/jdom-2.0.5-javadoc.jar"/>
+	<classpathentry kind="lib" path="lib/lingpipe-4.1.0.jar"/>
+	<classpathentry kind="lib" path="lib/lucene-core-3.6.0-javadoc.jar"/>
+	<classpathentry kind="lib" path="lib/lucene-core-4.0.0.jar"/>
+	<classpathentry kind="lib" path="lib/lucene-queryparser-4.0.0.jar"/>
+	<classpathentry kind="lib" path="lib/stanford-postagger.jar"/>
+	<classpathentry kind="lib" path="lib/trove.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
