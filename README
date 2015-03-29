@@ -1,4 +1,15 @@
-Author:q.s.d
+Author:qiushiding
+avest1000@gmail.com
+
+--------------------------
+UPDATE in 2015.03.29
+本repo是我2014年研究生毕业设计实验代码
+相关论文:
+1.毕业论文<一种基于背景知识的关键词提取算法>
+2.计算机研究与发展CCFBigData2014<一种基于背景知识的关键词抽取算法>
+3.The 16th International Conference on Web-Age Information Management 2015(WAIM)
+<Novel word features for keyword extraction>
+--------------------------
 
 项目代码结构：
 AbstractExtraction
